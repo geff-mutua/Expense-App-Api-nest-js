@@ -61,3 +61,6 @@ This is simple api based project for showing how you can get started with Nest J
 
 ## Validation
 To validate data sent in form we use DTOs (Data Transfer Objects)
+
+## Swagger
+This is used to expose the endpoints for the expense application
