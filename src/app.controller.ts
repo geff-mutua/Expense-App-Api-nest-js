@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseEnumPipe, ParseUUIDPipe, Post, Put } from "@nestjs/common";
 import { data,ReportType } from "./data";
 
-import { v4 as uuid } from "uuid";
 import { AppService } from "./app.service";
+import { CreateReportDto, ReportResponseDto, UpdateReportDto } from "./dtos/report.dto";
 
 @Controller('report/:type') // You can define the prefix of the urls here
 export class AppController {
@@ -12,7 +12,7 @@ export class AppController {
   ){}
 
   @Get() // Accepts the other segments of the url => Multiple Get requests can be ddefined on the same controller 
-  getAllReports(@Param('type') type: string) {
+  getAllReports(@Param('type') type: string) : ReportResponseDto[] {
     const reportType=type=="income"?ReportType.INCOME:ReportType.EXPENSE
     return this.appService.getAllReports(reportType);
   }
@@ -20,30 +20,30 @@ export class AppController {
   // Accepting Id parameters from Endpoint
   @Get(':id') // http://localhost:3000/report/income/hdaskhdkaskdksahdkhasd
   getReportById(
-    @Param('type') type:string,
-    @Param('id') id:string
-  ) {
+    @Param('type',new ParseEnumPipe(ReportType)) type:string,
+    @Param('id',ParseUUIDPipe) id:string
+  ):ReportResponseDto {
     const reportType=type=="income"?ReportType.INCOME:ReportType.EXPENSE
     return this.appService.getReportById(id,reportType);
   }
 
   @Post()
   createReport(
-    @Body() body:{amount:number,source:string},
-    @Param('type') type:string
-  ) {
+    @Body() body:CreateReportDto,
+    @Param('type',new ParseEnumPipe(ReportType)) type:string
+  ):ReportResponseDto {
     const reportType=type=="income"?ReportType.INCOME:ReportType.EXPENSE
     return this.appService.createReport(body,reportType)
   }
 
   @Put(':id')
-  updateReport(@Body() body:{amount:number,source:string},@Param('id') id:string,@Param('type') type:string) {
+  updateReport(@Body() body:UpdateReportDto,@Param('id',ParseUUIDPipe) id:string,@Param('type',new ParseEnumPipe(ReportType)) type:string) :ReportResponseDto{
     const reportType=type==="income" ?ReportType.INCOME : ReportType.EXPENSE;
     return this.appService.updateReport(id,body,reportType);
   }
 
   @Delete(':id')
-  deleteReport(@Param('type') type:string,@Param('id') id:string) {
+  deleteReport(@Param('type',new ParseEnumPipe(ReportType)) type:string,@Param('id',ParseUUIDPipe) id:string) {
     const reportType=type==="income" ?ReportType.INCOME : ReportType.EXPENSE;
     return this.appService.deleteReport(id,reportType);
 

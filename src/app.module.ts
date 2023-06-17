@@ -1,10 +1,14 @@
-import { Module } from '@nestjs/common';
+import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,{
+    provide:APP_INTERCEPTOR, //Required for transforming data reponse 
+    useClass:ClassSerializerInterceptor
+  }],
 })
 export class AppModule {}

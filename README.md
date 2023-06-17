@@ -53,4 +53,11 @@ $ npm run start:prod
 
 ## About the App
 
-This is simple api based project for showing how you can get started with Nest Js framework to create awesome backend.
+This is simple api based project for showing how you can get started with Nest Js framework to create awesome backend Apis
+
+## Basics
+- Data sent in a url is retrieved by use of @Param() decorator
+- Validation in Nest Js uses Pipes for values sent in params
+
+## Validation
+To validate data sent in form we use DTOs (Data Transfer Objects)

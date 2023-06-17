@@ -6,30 +6,7 @@ export enum ReportType{
 
 export const data:Data={
     report: [
-        {
-            id:"uuid1",
-            source:"Salary",
-            amount:7500,
-            created_at:new Date(),
-            updated_at:new Date(),
-            type:ReportType.EXPENSE
-        },
-        {
-            id:"uuid2",
-            source:"Qxp",
-            amount:250,
-            created_at:new Date(),
-            updated_at:new Date(),
-            type:ReportType.INCOME
-        },
-        {
-            id:"uuid3",
-            source:"Youtube",
-            amount:100,
-            created_at:new Date(),
-            updated_at:new Date(),
-            type:ReportType.EXPENSE
-        },
+        
     ]
 }
 
